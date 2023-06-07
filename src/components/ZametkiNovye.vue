@@ -3,8 +3,12 @@
 <div class="notes">
   <div class="note" :class="{ full: !grid }" v-for="(note, index) in notes" :key="index">
     <div class="note-header" :class="{ full: !grid }" ></div>
-       <p v-bind="newTitle" v-if="changeN" @click="changeNo" style="cursor: pointer">{{ note.title }}</p>
-       <input type="text" v-model="note.title" v-else><button class="btn btnPrimary" @click="changeNo1">Change</button>
+       
+       <input type="text" v-model="note.title" v-if="index === curIndex">
+
+       <p v-bind="newTitle" @click="changeNo(index)" style="cursor: pointer" v-else>{{ note.title }}</p>
+       
+       <button class="btn btnPrimary" @click="changeNo1(index)">Change</button>
 
        <p style="cursor: pointer" @click="remove">x</p>
     <div class="note-body"></div>
@@ -17,10 +21,14 @@
 </template>
 
 <script>
+
+
+
 export default {
   data: () => {
     return {
-      changeN: true
+      changeN: true,
+      curIndex: undefined
     }
 },
     props: {
@@ -40,8 +48,14 @@ export default {
         changeNo () {
           this.changeN = !this.changeN
         },
-        changeNo1 () {
+        changeNo1 (index) {
           this.changeN = !this.changeN
+
+          if (this.curIndex === index) {
+            this.curIndex = undefined
+          }
+          else this.curIndex = index
+
         }
 },
 
@@ -118,5 +132,6 @@ export default {
     color: #999999;
   }
 }
+
 
 </style>
