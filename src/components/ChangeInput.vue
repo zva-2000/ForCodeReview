@@ -25,10 +25,6 @@ export default {
       type: Number,
       required: true
       },
-      notes: {
-        type: Array,
-        required: true
-     },
     },
     methods: {
         toChange () {
