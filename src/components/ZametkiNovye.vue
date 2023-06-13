@@ -4,11 +4,7 @@
   <div class="note" :class="{ full: !grid }" v-for="(note, index) in notes" :key="index">
     <div class="note-header" :class="{ full: !grid }" ></div>
        
-       <input type="text" v-model="note.title" v-if="index === curIndex">
-
-       <p v-bind="newTitle" @click="changeNo(index)" style="cursor: pointer" v-else>{{ note.title }}</p>
-       
-       <button class="btn btnPrimary" @click="changeNo1(index)">Change</button>
+    <ChangeInput :note="note" :index="index" @toChange="changeNo1"></ChangeInput>
 
        <p style="cursor: pointer" @click="remove">x</p>
     <div class="note-body"></div>
@@ -22,12 +18,14 @@
 
 <script>
 
-
+import ChangeInput from '@/components/ChangeInput.vue'
 
 export default {
+  components: {
+    ChangeInput
+  },
   data: () => {
     return {
-      changeN: true,
       curIndex: undefined
     }
 },
@@ -45,12 +43,7 @@ export default {
         remove (index) {
             this.$emit ('remove', index)
         },
-        changeNo () {
-          this.changeN = !this.changeN
-        },
         changeNo1 (index) {
-          this.changeN = !this.changeN
-
           if (this.curIndex === index) {
             this.curIndex = undefined
           }
